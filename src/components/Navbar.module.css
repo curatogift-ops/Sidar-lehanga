@@ -1,0 +1,123 @@
+.navbar {
+    height: var(--header-height);
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    position: relative;
+}
+
+.leftSection,
+.rightSection {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    z-index: 2;
+    /* Ensure icons are above logo if overlap */
+}
+
+.hamburger {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-main);
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.logo a {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.centerSection {
+    display: none;
+    /* Hidden on mobile */
+}
+
+.centerSection a {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.centerSection a:hover {
+    color: var(--primary);
+}
+
+.searchIcon,
+.rightSection button {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.searchIcon:hover,
+.rightSection button:hover {
+    color: var(--primary);
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        padding: 0 2rem;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .logo {
+        position: static;
+        transform: none;
+        margin-right: auto;
+        /* Push everything else to right or center */
+        order: -1;
+        /* Ensure it's first */
+    }
+
+    .centerSection {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .leftSection {
+        display: none;
+        /* Hide hamburger container */
+    }
+}

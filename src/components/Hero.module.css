@@ -1,0 +1,49 @@
+.hero {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    height: 60vh;
+    /* Shorter on mobile */
+    width: 100%;
+    gap: 2px;
+    background-color: white;
+    -webkit-overflow-scrolling: touch;
+}
+
+.imageWrapper {
+    flex: 0 0 85%;
+    /* Show part of next image on mobile */
+    scroll-snap-align: center;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        height: 80vh;
+        overflow-x: visible;
+    }
+
+    .imageWrapper {
+        width: 100%;
+        flex: none;
+        /* Reset flex for grid child */
+    }
+}
