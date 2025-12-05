@@ -2,24 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './product.module.css';
 import ProductCard from '@/components/ProductCard';
 
 // Mock data for the product
 const product = {
     id: 1,
-    title: "Burnt Orange Soft Net Bridal Lehenga with Coding Sequins Embroidery",
-    price: 3412,
-    originalPrice: 7600,
+    title: "Mint Net Lehenga with Multi-Color Embroidery",
+    price: 2523,
+    originalPrice: 6899,
+    sku: "LEH101MINT",
     images: [
-        "/hero1.webp", // Using existing images as placeholders
+        "/hero3.webp",
+        "/hero1.webp",
         "/hero2.webp",
         "/hero3.webp",
         "/hero1.webp",
         "/hero2.webp"
     ],
-    sizes: ["XS", "S", "M", "L", "XL", "2XL"],
-    stitching: ["BLOUSE & LEHENGA", "SEMI STITCHING"]
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Mint", hex: "#98FF98" }]
 };
 
 const relatedProducts = [
@@ -31,12 +34,14 @@ const relatedProducts = [
 
 export default function ProductPage() {
     const [selectedImage, setSelectedImage] = useState(0);
-    const [quantity, setQuantity] = useState(1);
-    const [selectedSize, setSelectedSize] = useState("XS");
-    const [selectedStitching, setSelectedStitching] = useState("BLOUSE & LEHENGA");
+    const [selectedSize, setSelectedSize] = useState("");
+    const [pincode, setPincode] = useState("");
 
     return (
         <div className={styles.container}>
+            {/* Breadcrumbs */}
+
+
             <div className={styles.productLayout}>
                 {/* Gallery */}
                 <div className={styles.gallery}>
@@ -48,6 +53,7 @@ export default function ProductPage() {
                                 onClick={() => setSelectedImage(idx)}
                             >
                                 <Image src={img} alt={`Thumbnail ${idx}`} fill style={{ objectFit: 'cover' }} />
+                                {idx === 2 && <div className={styles.playIcon}>▶</div>}
                             </div>
                         ))}
                     </div>
@@ -59,6 +65,16 @@ export default function ProductPage() {
                             style={{ objectFit: 'cover' }}
                             priority
                         />
+                        <button className={styles.wishlistBtn}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                        <button className={styles.shareBtn}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -66,96 +82,96 @@ export default function ProductPage() {
                 <div className={styles.info}>
                     <h1 className={styles.title}>{product.title}</h1>
 
-                    <div className={styles.priceContainer}>
-                        <span className={styles.price}>Rs. {product.price.toLocaleString()}.00</span>
-                        <span className={styles.originalPrice}>Rs. {product.originalPrice.toLocaleString()}.00</span>
-                        <span className={styles.saveBadge}>You Save 55%</span>
+                    <div className={styles.mainPrice}>
+                        <span className={styles.currency}>₹</span> {product.price.toLocaleString()} <span className={styles.taxNote}>MRP (Inclusive of all taxes)</span>
                     </div>
 
-                    <div className={styles.offerBanner}>
-                        <span>Extra ₹200 OFF on Prepaid Orders</span>
-                        <span className={styles.timer}>06:31</span>
-                    </div>
-
-                    {/* Options */}
+                    {/* Color Selection */}
                     <div className={styles.optionGroup}>
-                        <span className={styles.optionLabel}>STITCHING</span>
-                        <div className={styles.options}>
-                            {product.stitching.map(opt => (
+                        <span className={styles.optionLabel}>SELECT COLOUR</span>
+                        <div className={styles.colors}>
+                            {product.colors.map((color, idx) => (
                                 <button
-                                    key={opt}
-                                    className={`${styles.optionBtn} ${selectedStitching === opt ? styles.selected : ''}`}
-                                    onClick={() => setSelectedStitching(opt)}
-                                >
-                                    {opt}
-                                </button>
+                                    key={idx}
+                                    className={styles.colorBtn}
+                                    style={{ backgroundColor: color.hex }}
+                                    aria-label={color.name}
+                                ></button>
                             ))}
                         </div>
                     </div>
 
+                    {/* Size Selection */}
                     <div className={styles.optionGroup}>
-                        <span className={styles.optionLabel}>SIZE</span>
-                        <div className={styles.options}>
+                        <div className={styles.sizeHeader}>
+                            <span className={styles.optionLabel}>SELECT SIZE</span>
+                            <button className={styles.sizeChartBtn}>ⓘ Size Chart</button>
+                        </div>
+                        <div className={styles.sizes}>
                             {product.sizes.map(size => (
                                 <button
                                     key={size}
-                                    className={`${styles.optionBtn} ${selectedSize === size ? styles.selected : ''}`}
+                                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.selected : ''}`}
                                     onClick={() => setSelectedSize(size)}
                                 >
                                     {size}
+                                    <span className={styles.emailIcon}>✉</span>
                                 </button>
                             ))}
                         </div>
+                        <button className={styles.moreSizes}>+ More sizes</button>
+                    </div>
+
+                    <div className={styles.viewCount}>
+                        👁 1,040 people have viewed the product recently
                     </div>
 
                     {/* Actions */}
                     <div className={styles.actions}>
-                        <div className={styles.quantityControl}>
-                            <button className={styles.qtyBtn} onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                            <input type="text" value={quantity} readOnly className={styles.qtyInput} />
-                            <button className={styles.qtyBtn} onClick={() => setQuantity(quantity + 1)}>+</button>
-                        </div>
-
-                        <button className={styles.addToCart}>Add to cart</button>
-                        <button className={styles.buyNow}>Buy it now</button>
+                        <button className={styles.addToCart}>ADD TO CART</button>
+                        <button className={styles.buyNow}>BUY NOW</button>
                     </div>
 
-                    {/* Trust Badges */}
-                    <div className={styles.trustBadges}>
-                        <div className={styles.badge}>
-                            <div className={styles.badgeIcon}>🚚</div>
-                            <span>Fast Shipping</span>
-                        </div>
-                        <div className={styles.badge}>
-                            <div className={styles.badgeIcon}>↩️</div>
-                            <span>Easy Returns</span>
-                        </div>
-                        <div className={styles.badge}>
-                            <div className={styles.badgeIcon}>🔒</div>
-                            <span>Secure Payment</span>
-                        </div>
-                        <div className={styles.badge}>
-                            <div className={styles.badgeIcon}>🏆</div>
-                            <span>Best Quality</span>
-                        </div>
+                    {/* Pincode */}
+                    <div className={styles.pincodeContainer}>
+                        <input
+                            type="text"
+                            placeholder="Enter pincode"
+                            value={pincode}
+                            onChange={(e) => setPincode(e.target.value)}
+                            className={styles.pincodeInput}
+                        />
+                        <button className={styles.checkBtn}>CHECK</button>
                     </div>
 
-                    {/* Description */}
-                    <div className={styles.description}>
-                        <p><strong>Lehenga Details</strong></p>
-                        <ul>
-                            <li>Lehenga Fabric: Premium quality soft net</li>
-                            <li>Lehenga Work: Coding sequins work with cancan and canvas patta</li>
-                            <li>Lehenga Flare: 4 meter flared</li>
-                            <li>Lehenga Type: Semi stitched</li>
-                            <li>Lehenga Length: 42 inches</li>
-                        </ul>
-                        <p className="mt-4"><strong>Blouse Details</strong></p>
-                        <ul>
-                            <li>Blouse Fabric: Premium quality soft net with lining</li>
-                            <li>Blouse Work: Sequins coding work</li>
-                            <li>Blouse Type: 1.3 meter unstitched</li>
-                        </ul>
+                    {/* Services */}
+                    <div className={styles.services}>
+                        <div className={styles.serviceItem}>
+                            <span className={styles.serviceIcon}>🚚</span>
+                            <div className={styles.serviceText}>
+                                <div className={styles.serviceTitle}>Free delivery</div>
+                                <div className={styles.serviceSub}>within 2-3 days</div>
+                            </div>
+                        </div>
+                        <div className={styles.serviceItem}>
+                            <span className={styles.serviceIcon}>↩️</span>
+                            <div className={styles.serviceText}>
+                                <div className={styles.serviceTitle}>Easy Exchange in</div>
+                                <div className={styles.serviceSub}>10 days</div>
+                            </div>
+                        </div>
+                        <div className={styles.serviceItem}>
+                            <span className={styles.serviceIcon}>📹</span>
+                            <div className={styles.serviceText}>
+                                <Link href="#" className={styles.serviceLink}>Book a video call</Link>
+                            </div>
+                        </div>
+                        <div className={styles.serviceItem}>
+                            <span className={styles.serviceIcon}>🏪</span>
+                            <div className={styles.serviceText}>
+                                <Link href="#" className={styles.serviceLink}>Book a store visit</Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,12 +4,13 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
+import FloatingButtons from "@/components/FloatingButtons";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-main" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-heading" });
 
 export const metadata: Metadata = {
-  title: "LUXE | Premium Fashion",
+  title: "Sider Lehenga | Premium Fashion",
   description: "Discover the latest trends in luxury fashion.",
 };
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <FloatingButtons />
       </body>
     </html>
   );

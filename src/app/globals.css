@@ -1,26 +1,33 @@
 :root {
   /* Colors */
-  --primary: #C5A059; /* Gold/Beige accent */
-  --primary-dark: #A38035;
-  --secondary: #1A1A1A; /* Dark text/bg */
-  --accent: #E74C3C; /* Sale/Action */
-  
-  --background: #FFFFFF;
-  --surface: #F9F9F9;
-  --border: #E5E5E5;
-  
-  --text-main: #1A1A1A;
-  --text-secondary: #666666;
-  --text-light: #999999;
+  /* Colors */
+  --primary: #511D00;
+  /* Deep Brown */
+  --primary-dark: #3E1600;
+  --secondary: #511D00;
+  /* Dark text/bg */
+  --accent: #D32F2F;
+  /* Sale/Action */
+  --accent-secondary: #7B776D;
+  --accent-orange: #E04E1C;
+
+  --background: #F8ECD7;
+  --surface: #FDF6E9;
+  --border: #E6DCC8;
+
+  --text-main: #511D00;
+  --text-secondary: #6D4C41;
+  --text-light: #7B776D;
   --text-white: #FFFFFF;
 
   /* Spacing */
   --container-width: 1200px;
   --header-height: 80px;
-  
+
   /* Typography */
   --font-main: 'Inter', sans-serif;
-  --font-heading: 'Playfair Display', serif; /* Premium feel */
+  --font-heading: 'Playfair Display', serif;
+  /* Premium feel */
 }
 
 * {
@@ -39,7 +46,12 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
@@ -71,12 +83,60 @@ img {
 }
 
 /* Utilities */
-.text-center { text-align: center; }
-.flex { display: flex; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.grid { display: grid; }
-.gap-4 { gap: 1rem; }
-.mt-4 { margin-top: 1rem; }
-.mb-4 { margin-bottom: 1rem; }
+.text-center {
+  text-align: center;
+}
 
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  background-color: var(--accent-secondary);
+  color: var(--text-white);
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background-color: var(--accent-orange);
+  color: var(--text-white);
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}

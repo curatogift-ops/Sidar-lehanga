@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './ProductCard.module.css';
 
 interface ProductProps {
@@ -13,8 +14,13 @@ export default function ProductCard({ product }: { product: ProductProps }) {
     return (
         <Link href={`/product/${product.id}`} className={styles.card}>
             <div className={styles.imageContainer}>
-                {/* Placeholder instead of img */}
-                <div className={styles.placeholder}></div>
+                <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className={styles.image}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
                 <div className={styles.saleBadge}>Sale</div>
             </div>
             <div className={styles.details}>

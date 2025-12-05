@@ -15,13 +15,11 @@ export default function Navbar() {
 
         <div className={styles.logo}>
           <Link href="/">
-            <Image src="/logo.webp" alt="LUXE Logo" width={100} height={40} style={{ objectFit: 'contain' }} />
+            <Image src="/logo.webp" alt="Sider Lehenga Logo" width={100} height={40} style={{ objectFit: 'contain' }} />
           </Link>
         </div>
 
-        <div className={styles.centerSection}>
-          <Link href="/shop">Shop Now</Link>
-        </div>
+
 
         <div className={styles.rightSection}>
           <button className={styles.searchIcon} aria-label="Search">

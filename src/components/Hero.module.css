@@ -1,49 +1,183 @@
 .hero {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    height: 60vh;
-    /* Shorter on mobile */
+    position: relative;
     width: 100%;
-    gap: 2px;
-    background-color: white;
-    -webkit-overflow-scrolling: touch;
+    height: 85vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-.imageWrapper {
-    flex: 0 0 85%;
-    /* Show part of next image on mobile */
-    scroll-snap-align: center;
-    position: relative;
-    height: 100%;
-    overflow: hidden;
+.bgImage {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.activeImage {
+    opacity: 1;
+    z-index: 1;
+}
+
+.image {
+    object-fit: cover;
+    object-position: center 20%;
+    /* Adjusted to focus on face/upper body */
 }
 
 .overlay {
     position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 1rem 2rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
 }
 
+.content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: var(--container-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.headingWrapper {
+    margin-bottom: 2rem;
+}
+
+.heading {
+    font-family: var(--font-heading, serif);
+    font-size: 3.5rem;
+    color: white;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navItem {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 15px 30px;
+    /* Match active padding to prevent jump */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Match active alignment */
+    letter-spacing: 1px;
+    width: 100%;
+    max-width: 400px;
+    /* Match active width constraint */
+    cursor: default;
+    border-radius: 4px;
+    /* Optional: smooth corners */
+}
+
+.navItem:hover {
+    color: white;
+}
+
+.active {
+    background-color: #E04E1C;
+    /* Orange */
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    cursor: default;
+    /* Not clickable */
+    /* Layout properties inherited/matched with navItem to prevent flickering */
+}
+
+.arrowIcon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive */
 @media (min-width: 768px) {
-    .hero {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        height: 80vh;
-        overflow-x: visible;
+    .content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
 
-    .imageWrapper {
+    .headingWrapper {
+        width: 50%;
+        margin-bottom: 0;
+    }
+
+    .heading {
+        font-size: 5rem;
+    }
+
+    .navWrapper {
+        width: 40%;
+        align-items: flex-end;
+    }
+
+    .navItem {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+        /* Ensure consistent padding on desktop too */
+    }
+
+    .active {
+        width: 350px;
+        max-width: none;
+    }
+
+    /* Ensure inactive items also have the same width on desktop for alignment */
+    .navItem:not(.active) {
+        width: 350px;
+        max-width: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        height: 100vh;
+    }
+
+    .content {
+        justify-content: center;
+        padding-top: 60px;
+    }
+
+    .heading {
+        font-size: 3rem;
+        text-align: left;
+        margin-bottom: 3rem;
+    }
+
+    .navWrapper {
         width: 100%;
-        flex: none;
-        /* Reset flex for grid child */
+        align-items: flex-start;
+    }
+
+    .navItem {
+        width: 100%;
+        max-width: 100%;
+        /* Ensure full width on mobile */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 0.5rem;
+        /* Add spacing */
+    }
+
+    .active {
+        width: 100%;
+        max-width: 100%;
+        border-bottom: none;
     }
 }

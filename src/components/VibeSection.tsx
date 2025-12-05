@@ -1,0 +1,78 @@
+'use client';
+
+import React, { useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './VibeSection.module.css';
+
+const vibes = [
+    { id: 2, title: 'Indo Western', image: '/hero2.webp', link: '/product/1' },
+    { id: 3, title: 'Lehenga', image: '/hero3.webp', link: '/product/1' },
+    { id: 4, title: 'Saree', image: '/hero1.webp', link: '/product/1' },
+    { id: 5, title: 'Gown', image: '/hero2.webp', link: '/product/1' },
+    { id: 6, title: 'Sharara', image: '/hero3.webp', link: '/product/1' },
+    { id: 7, title: 'Anarkali', image: '/hero1.webp', link: '/product/1' },
+];
+
+const VibeSection = () => {
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (carouselRef.current) {
+            const { current } = carouselRef;
+            const scrollAmount = 320; // Card width + gap
+            if (direction === 'left') {
+                current.scrollLeft -= scrollAmount;
+            } else {
+                current.scrollLeft += scrollAmount;
+            }
+        }
+    };
+
+    return (
+        <section className={styles.section}>
+            <h2 className={styles.heading}>What's Your Vibe?</h2>
+
+            <div className={styles.carouselContainer}>
+                <button
+                    className={`${styles.navButton} ${styles.prevButton}`}
+                    onClick={() => scroll('left')}
+                    aria-label="Previous"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+
+                <div className={styles.carousel} ref={carouselRef}>
+                    {vibes.map((vibe) => (
+                        <Link href={vibe.link} key={vibe.id} className={styles.card}>
+                            <Image
+                                src={vibe.image}
+                                alt={vibe.title}
+                                fill
+                                className={styles.image}
+                                sizes="(max-width: 768px) 260px, 300px"
+                            />
+                            <div className={styles.overlay}>
+                                <span className={styles.cardTitle}>{vibe.title}</span>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+
+                <button
+                    className={`${styles.navButton} ${styles.nextButton}`}
+                    onClick={() => scroll('right')}
+                    aria-label="Next"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+    );
+};
+
+export default VibeSection;
