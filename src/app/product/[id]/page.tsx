@@ -1,67 +1,82 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound, useParams } from 'next/navigation';
 import styles from './product.module.css';
+import productsData from '@/data/products.json';
 import ProductCard from '@/components/ProductCard';
 
-// Mock data for the product
-const product = {
-    id: 1,
-    title: "Mint Net Lehenga with Multi-Color Embroidery",
-    price: 2523,
-    originalPrice: 6899,
-    sku: "LEH101MINT",
-    images: [
-        "/hero3.webp",
-        "/hero1.webp",
-        "/hero2.webp",
-        "/hero3.webp",
-        "/hero1.webp",
-        "/hero2.webp"
-    ],
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    colors: [{ name: "Mint", hex: "#98FF98" }]
+// Helper to format price
+const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+    }).format(price);
 };
 
-const relatedProducts = [
-    { id: 2, name: "HOT PINK SOFT NET BRIDAL", price: "Rs. 2,912.00", category: "Lehenga", image: "/hero2.webp" },
-    { id: 3, name: "PREMIUM SOFT NET LEHENGA", price: "Rs. 2,899.00", category: "Lehenga", image: "/hero3.webp" },
-    { id: 4, name: "NAVY BLUE HEAVY EMBROIDERED", price: "Rs. 2,912.00", category: "Lehenga", image: "/hero1.webp" },
-    { id: 5, name: "MAJESTIC MUSTARD YELLOW", price: "Rs. 2,899.00", category: "Lehenga", image: "/hero2.webp" }
-];
-
 export default function ProductPage() {
-    const [selectedImage, setSelectedImage] = useState(0);
+    const params = useParams();
+    const id = params?.id;
+
+    // Handle case where id might not be available yet or is invalid
+    if (!id) {
+        return null; // or a loading state
+    }
+
+    const productId = parseInt(Array.isArray(id) ? id[0] : id);
+    const product = productsData.find(p => p.id === productId);
+
+    // Hooks must be called before conditional returns
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [selectedSize, setSelectedSize] = useState("");
     const [pincode, setPincode] = useState("");
 
+    if (!product) {
+        notFound();
+    }
+
+    // Get related products (just taking first 4 for now, excluding current)
+    const relatedProducts = productsData
+        .filter(p => p.id !== product.id)
+        .slice(0, 4);
+
+    const currentImage = product.images[selectedImageIndex];
+
     return (
         <div className={styles.container}>
-            {/* Breadcrumbs */}
-
+            <div className={styles.breadcrumb}>
+                <Link href="/">Home</Link> / <Link href="/category/lehenga">{product.category}</Link> / <span>{product.title}</span>
+            </div>
 
             <div className={styles.productLayout}>
-                {/* Gallery */}
+                {/* Image Gallery */}
                 <div className={styles.gallery}>
                     <div className={styles.thumbnails}>
-                        {product.images.map((img, idx) => (
+                        {product.images.map((img, index) => (
                             <div
-                                key={idx}
-                                className={`${styles.thumbnail} ${selectedImage === idx ? styles.active : ''}`}
-                                onClick={() => setSelectedImage(idx)}
+                                key={index}
+                                className={`${styles.thumbnail} ${selectedImageIndex === index ? styles.active : ''}`}
+                                onClick={() => setSelectedImageIndex(index)}
                             >
-                                <Image src={img} alt={`Thumbnail ${idx}`} fill style={{ objectFit: 'cover' }} />
-                                {idx === 2 && <div className={styles.playIcon}>▶</div>}
+                                <Image
+                                    src={img}
+                                    alt={`${product.title} view ${index + 1}`}
+                                    fill
+                                    className={styles.thumbImage}
+                                    style={{ objectFit: 'cover' }}
+                                />
                             </div>
                         ))}
                     </div>
                     <div className={styles.mainImage}>
                         <Image
-                            src={product.images[selectedImage]}
+                            src={currentImage}
                             alt={product.title}
                             fill
+                            className={styles.image}
                             style={{ objectFit: 'cover' }}
                             priority
                         />
@@ -78,28 +93,22 @@ export default function ProductPage() {
                     </div>
                 </div>
 
-                {/* Details */}
+                {/* Product Info */}
                 <div className={styles.info}>
                     <h1 className={styles.title}>{product.title}</h1>
 
                     <div className={styles.mainPrice}>
-                        <span className={styles.currency}>₹</span> {product.price.toLocaleString()} <span className={styles.taxNote}>MRP (Inclusive of all taxes)</span>
+                        <span className={styles.currency}></span> {formatPrice(product.price)}
+                        {product.originalPrice > product.price && (
+                            <span className={styles.taxNote} style={{ textDecoration: 'line-through', marginLeft: '10px', color: '#999' }}>
+                                {formatPrice(product.originalPrice)}
+                            </span>
+                        )}
+                        <span className={styles.taxNote} style={{ marginLeft: '10px' }}>
+                            ({product.discount}% OFF)
+                        </span>
                     </div>
-
-                    {/* Color Selection */}
-                    <div className={styles.optionGroup}>
-                        <span className={styles.optionLabel}>SELECT COLOUR</span>
-                        <div className={styles.colors}>
-                            {product.colors.map((color, idx) => (
-                                <button
-                                    key={idx}
-                                    className={styles.colorBtn}
-                                    style={{ backgroundColor: color.hex }}
-                                    aria-label={color.name}
-                                ></button>
-                            ))}
-                        </div>
-                    </div>
+                    <div className={styles.taxNote}>MRP (Inclusive of all taxes)</div>
 
                     {/* Size Selection */}
                     <div className={styles.optionGroup}>
@@ -108,25 +117,23 @@ export default function ProductPage() {
                             <button className={styles.sizeChartBtn}>ⓘ Size Chart</button>
                         </div>
                         <div className={styles.sizes}>
-                            {product.sizes.map(size => (
+                            {product.sizes.map((size) => (
                                 <button
                                     key={size}
                                     className={`${styles.sizeBtn} ${selectedSize === size ? styles.selected : ''}`}
                                     onClick={() => setSelectedSize(size)}
                                 >
                                     {size}
-                                    <span className={styles.emailIcon}>✉</span>
                                 </button>
                             ))}
                         </div>
-                        <button className={styles.moreSizes}>+ More sizes</button>
                     </div>
 
                     <div className={styles.viewCount}>
                         👁 1,040 people have viewed the product recently
                     </div>
 
-                    {/* Actions */}
+                    {/* Add to Cart Actions */}
                     <div className={styles.actions}>
                         <button className={styles.addToCart}>ADD TO CART</button>
                         <button className={styles.buyNow}>BUY NOW</button>
@@ -160,28 +167,31 @@ export default function ProductPage() {
                                 <div className={styles.serviceSub}>10 days</div>
                             </div>
                         </div>
-                        <div className={styles.serviceItem}>
-                            <span className={styles.serviceIcon}>📹</span>
-                            <div className={styles.serviceText}>
-                                <Link href="#" className={styles.serviceLink}>Book a video call</Link>
-                            </div>
-                        </div>
-                        <div className={styles.serviceItem}>
-                            <span className={styles.serviceIcon}>🏪</span>
-                            <div className={styles.serviceText}>
-                                <Link href="#" className={styles.serviceLink}>Book a store visit</Link>
-                            </div>
-                        </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className={styles.description} style={{ marginTop: '2rem' }}>
+                        <div className={styles.descriptionTitle} style={{ fontWeight: 'bold', marginBottom: '1rem' }}>Description</div>
+                        <div
+                            className={styles.descriptionContent}
+                            dangerouslySetInnerHTML={{ __html: product.description }}
+                        />
                     </div>
                 </div>
             </div>
 
             {/* Related Products */}
             <div className={styles.related}>
-                <h2>You may also like</h2>
+                <h2 className={styles.relatedTitle}>You may also like</h2>
                 <div className={styles.relatedGrid}>
-                    {relatedProducts.map(p => (
-                        <ProductCard key={p.id} product={p} />
+                    {relatedProducts.map((related) => (
+                        <ProductCard key={related.id} product={{
+                            id: related.id,
+                            name: related.title,
+                            price: formatPrice(related.price),
+                            category: related.category,
+                            image: related.images[0]
+                        }} />
                     ))}
                 </div>
             </div>

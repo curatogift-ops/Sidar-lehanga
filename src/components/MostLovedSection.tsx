@@ -3,15 +3,21 @@
 import React from 'react';
 import MostLovedCard from './MostLovedCard';
 import styles from './MostLovedSection.module.css';
+import productsData from '@/data/products.json';
 
-const products = [
-    { id: 101, name: "Elegant Cream Semi Bridal Lehenga", price: "₹ 19,999", image: "/hero1.webp", badge: "READY TO WEAR" },
-    { id: 102, name: "Radiant Mustard Yellow Georgette Indo Western", price: "₹ 11,999", image: "/hero2.webp", badge: "SOLD OUT" },
-    { id: 103, name: "Enchanting Beige Georgette Saree", price: "₹ 9,999", image: "/hero3.webp" },
-    { id: 104, name: "Soft Lilac with Scallop Patterns & Bel Buti Embroidery Anarkali Suit", price: "₹ 11,999", image: "/hero1.webp" },
-];
+// Helper to format price
+const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+    }).format(price);
+};
 
 const MostLovedSection = () => {
+    // Pick some "Most Loved" products, e.g., index 8 to 12
+    const lovedProducts = productsData.slice(8, 12);
+
     return (
         <section className={styles.section}>
             <h2 className={styles.heading}>MOST LOVED</h2>
@@ -21,8 +27,14 @@ const MostLovedSection = () => {
             </div>
 
             <div className={styles.grid}>
-                {products.map((product) => (
-                    <MostLovedCard key={product.id} product={product} />
+                {lovedProducts.map((product) => (
+                    <MostLovedCard key={product.id} product={{
+                        id: product.id,
+                        name: product.title,
+                        price: formatPrice(product.price),
+                        image: product.images[0],
+                        badge: product.discount > 50 ? `${product.discount}% OFF` : undefined
+                    }} />
                 ))}
             </div>
         </section>

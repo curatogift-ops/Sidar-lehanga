@@ -1,34 +1,60 @@
+'use client';
+
 import Hero from '@/components/Hero';
 import ProductCard from '@/components/ProductCard';
 import VibeSection from '@/components/VibeSection';
-import OccasionSection from '@/components/OccasionSection';
+
 import MostLovedSection from '@/components/MostLovedSection';
 import styles from './page.module.css';
+import productsData from '@/data/products.json';
 
-const products = [
-  { id: 1, name: "BURNT ORANGE SOFT NET BRIDAL LEHENGA", price: "Rs. 3,450.00", category: "Lehenga", image: "/hero1.webp" },
-  { id: 2, name: "HOT PINK MULTICOLOR EMBROIDERED", price: "Rs. 3,335.00", category: "Lehenga", image: "/hero2.webp" },
-  { id: 3, name: "MINT SILVER RADIANCE MIRROR WORK", price: "Rs. 2,075.00", category: "Lehenga", image: "/hero3.webp" },
-  { id: 4, name: "HOT PINK SOFT NET BRIDAL LEHENGA", price: "Rs. 2,183.00", category: "Lehenga", image: "/hero1.webp" },
-  { id: 5, name: "SOFT NET EMBROIDERED LEHENGA CHOLI", price: "Rs. 2,020.00", category: "Lehenga", image: "/hero2.webp" },
-  { id: 6, name: "MAJESTIC MUSTARD YELLOW LEHENGA", price: "Rs. 3,499.00", category: "Lehenga", image: "/hero3.webp" },
-  { id: 7, name: "PINK AND ORANGE DUAL TONE LEHENGA", price: "Rs. 2,675.00", category: "Lehenga", image: "/hero1.webp" },
-  { id: 8, name: "POWDER BLUE HEAVY EMBROIDERED", price: "Rs. 3,025.00", category: "Lehenga", image: "/hero2.webp" }
-];
+// Helper to format price
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(price);
+};
 
 export default function Home() {
+  // Get latest products (e.g., first 8)
+  const newProducts = productsData.slice(0, 8);
+
   return (
     <div className={styles.main}>
       <Hero />
       <VibeSection />
-      <OccasionSection />
+
       <MostLovedSection />
       <section className={`container ${styles.section}`}>
         <h2><span>NEW</span> PRODUCTS</h2>
         <div className={styles.grid}>
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} />
+          {newProducts.map(product => (
+            <ProductCard key={product.id} product={{
+              id: product.id,
+              name: product.title,
+              price: formatPrice(product.price),
+              originalPrice: product.originalPrice > product.price ? formatPrice(product.originalPrice) : undefined,
+              discount: product.discount,
+              category: product.category,
+              image: product.images[0]
+            }} />
           ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <a href="/shop" style={{
+            display: 'inline-block',
+            padding: '12px 30px',
+            backgroundColor: '#333',
+            color: '#fff',
+            textDecoration: 'none',
+            borderRadius: '4px',
+            fontSize: '1rem',
+            fontWeight: 500
+          }}>
+            VIEW ALL PRODUCTS
+          </a>
         </div>
       </section>
     </div>
