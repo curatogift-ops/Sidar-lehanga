@@ -8,13 +8,9 @@ import styles from './product.module.css';
 import productsData from '@/data/products.json';
 import ProductCard from '@/components/ProductCard';
 
-// Helper to format price
+// Helper to format price - using simple formatting to avoid hydration mismatches
 const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-        style: 'currency',
-        currency: 'INR',
-        maximumFractionDigits: 0
-    }).format(price);
+    return `₹${price.toLocaleString('en-IN')}`;
 };
 
 export default function ProductPage() {
@@ -97,14 +93,14 @@ export default function ProductPage() {
                 <div className={styles.info}>
                     <h1 className={styles.title}>{product.title}</h1>
 
-                    <div className={styles.mainPrice}>
+                    <div className={styles.mainPrice} suppressHydrationWarning>
                         <span className={styles.currency}></span> {formatPrice(product.price)}
                         {product.originalPrice > product.price && (
-                            <span className={styles.taxNote} style={{ textDecoration: 'line-through', marginLeft: '10px', color: '#999' }}>
+                            <span className={styles.taxNote} style={{ textDecoration: 'line-through', marginLeft: '10px', color: '#999' }} suppressHydrationWarning>
                                 {formatPrice(product.originalPrice)}
                             </span>
                         )}
-                        <span className={styles.taxNote} style={{ marginLeft: '10px' }}>
+                        <span className={styles.taxNote} style={{ marginLeft: '10px' }} suppressHydrationWarning>
                             ({product.discount}% OFF)
                         </span>
                     </div>

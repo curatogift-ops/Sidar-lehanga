@@ -32,7 +32,7 @@ export default function MostLovedCard({ product }: { product: ProductProps }) {
                 </button>
 
                 {product.badge && (
-                    <div className={styles.badge}>
+                    <div className={styles.badge} suppressHydrationWarning>
                         {product.badge}
                     </div>
                 )}
@@ -40,7 +40,7 @@ export default function MostLovedCard({ product }: { product: ProductProps }) {
 
             <div className={styles.details}>
                 <h3 className={styles.name}>{product.name}</h3>
-                <div className={styles.price}>{product.price}</div>
+                <div className={styles.price} suppressHydrationWarning>{product.price}</div>
             </div>
         </Link>
     );

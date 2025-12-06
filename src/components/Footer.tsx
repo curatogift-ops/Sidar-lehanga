@@ -70,12 +70,12 @@ export default function Footer() {
                     </div>
 
                     {/* Bottom Bar */}
-                    <div className={styles.bottomBar}>
-                        <div className={styles.copyright}>
+                    <div className={styles.bottomBar} suppressHydrationWarning>
+                        <div className={styles.copyright} suppressHydrationWarning>
                             &copy; 2025 Sider Lehenga created by Digitech Avenue
                         </div>
-                        <div className={styles.paymentIcons}>
-                            <div className={styles.paymentIcon} style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#002663', background: 'white', padding: '5px 10px' }}>
+                        <div className={styles.paymentIcons} suppressHydrationWarning>
+                            <div className={styles.paymentIcon} style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#002663', background: 'white', padding: '5px 10px' }} suppressHydrationWarning>
                                 Razorpay
                             </div>
                         </div>

@@ -8,13 +8,9 @@ import MostLovedSection from '@/components/MostLovedSection';
 import styles from './page.module.css';
 import productsData from '@/data/products.json';
 
-// Helper to format price
+// Helper to format price - using simple formatting to avoid hydration mismatches
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0
-  }).format(price);
+  return `₹${price.toLocaleString('en-IN')}`;
 };
 
 export default function Home() {
