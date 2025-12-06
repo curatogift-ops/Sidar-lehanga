@@ -6,12 +6,12 @@ import Link from 'next/link';
 import styles from './VibeSection.module.css';
 
 const vibes = [
-    { id: 2, title: 'Indo Western', image: '/hero2.webp', link: '/product/1' },
+    { id: 2, title: 'Indo Western', image: '/hero2.webp', link: '/product/2' },
     { id: 3, title: 'Lehenga', image: '/hero3.webp', link: '/product/1' },
-    { id: 4, title: 'Saree', image: '/hero1.webp', link: '/product/1' },
-    { id: 5, title: 'Gown', image: '/hero2.webp', link: '/product/1' },
-    { id: 6, title: 'Sharara', image: '/hero3.webp', link: '/product/1' },
-    { id: 7, title: 'Anarkali', image: '/hero1.webp', link: '/product/1' },
+    { id: 4, title: 'Saree', image: '/hero1.webp', link: '/product/4' },
+    { id: 5, title: 'Gown', image: '/hero2.webp', link: '/product/5' },
+    { id: 6, title: 'Sharara', image: '/hero3.webp', link: '/product/6' },
+    { id: 7, title: 'Anarkali', image: '/hero1.webp', link: '/product/7' },
 ];
 
 const VibeSection = () => {

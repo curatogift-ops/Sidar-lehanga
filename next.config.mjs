@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactCompiler: true,
+    // Configure Turbopack (default in Next.js 16) - empty config acknowledges we're using Turbopack
+    turbopack: {},
     images: {
         remotePatterns: [
             {
