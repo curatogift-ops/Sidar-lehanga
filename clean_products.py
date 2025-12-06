@@ -7,7 +7,7 @@ from collections import defaultdict
 # Configuration
 INPUT_FILE = 'products_export_1 (1).csv'
 OUTPUT_CSV = 'cleaned_products.csv'
-OUTPUT_JSON = 'products.json'
+OUTPUT_JSON = 'src/data/products.json'
 
 def clean_html(raw_html):
     if not raw_html:
