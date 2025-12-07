@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';
 import { formatPrice } from '@/utils/cartUtils';
-import { initializeRazorpay, createRazorpayOrder, verifyRazorpayPayment } from '@/lib/razorpay';
 import { UserDetails } from '@/types/types';
 import styles from './checkout.module.css';
 
