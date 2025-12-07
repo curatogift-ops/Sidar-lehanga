@@ -20,7 +20,7 @@ export default function OrderFailedPage() {
                     </svg>
                 </div>
 
-                <h1>Payment Failed</h1>
+                <h1 className={styles.title}>Payment Failed</h1>
                 <p className={styles.subtitle}>We couldn't process your payment</p>
 
                 <div className={styles.message}>
