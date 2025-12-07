@@ -1,0 +1,64 @@
+.cartIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cartIcon:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.5;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #e91e63;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  animation: badgePop 0.3s ease;
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .badge {
+    font-size: 0.65rem;
+    min-width: 16px;
+    height: 16px;
+  }
+}

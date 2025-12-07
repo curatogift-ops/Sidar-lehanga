@@ -8,6 +8,42 @@
     box-sizing: border-box;
 }
 
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .notification {
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}
+
 @media (min-width: 768px) {
     .container {
         padding: 2rem 20px;
@@ -353,6 +389,9 @@
     justify-content: center;
     gap: 5px;
     color: #666;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    font-weight: 500;
 }
 
 @media (min-width: 768px) {
@@ -363,9 +402,17 @@
     }
 }
 
+.sizeBtn:hover {
+    border-color: #888;
+    background: #f5f5f5;
+    transform: translateY(-1px);
+}
+
 .sizeBtn.selected {
-    border-color: #333;
-    color: #333;
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    font-weight: 600;
 }
 
 .emailIcon {

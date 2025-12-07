@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound, useParams } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 import styles from './product.module.css';
 import productsData from '@/data/products.json';
 import ProductCard from '@/components/ProductCard';
+import { useCartStore } from '@/store/useCartStore';
 
 // Helper to format price - using simple formatting to avoid hydration mismatches
 const formatPrice = (price: number) => {
@@ -15,6 +16,7 @@ const formatPrice = (price: number) => {
 
 export default function ProductPage() {
     const params = useParams();
+    const router = useRouter();
     const id = params?.id;
 
     // Handle case where id might not be available yet or is invalid
@@ -29,6 +31,16 @@ export default function ProductPage() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [selectedSize, setSelectedSize] = useState("");
     const [pincode, setPincode] = useState("");
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState("");
+
+
+    const { addItem, items, initializeCart } = useCartStore();
+
+
+    useEffect(() => {
+        initializeCart();
+    }, [initializeCart]);
 
     if (!product) {
         notFound();
@@ -41,11 +53,74 @@ export default function ProductPage() {
 
     const currentImage = product.images[selectedImageIndex];
 
+    const handleAddToCart = () => {
+        if (!selectedSize) {
+            setNotificationMessage("Please select a size");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
+            return;
+        }
+
+        addItem({
+            productId: product.id,
+            name: product.title,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            size: selectedSize,
+            image: product.images[0]
+        });
+
+        setNotificationMessage("Added to cart successfully!");
+        setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 3000);
+    };
+
+    const handleBuyNow = () => {
+        if (!selectedSize) {
+            setNotificationMessage("Please select a size");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
+            return;
+        }
+
+        try {
+            // Check if item with same product and size already exists in cart
+            const existingItem = items.find(
+                item => item.productId === product.id && item.size === selectedSize
+            );
+
+            // Only add to cart if not already there with same size
+            if (!existingItem) {
+                addItem({
+                    productId: product.id,
+                    name: product.title,
+                    price: product.price,
+                    originalPrice: product.originalPrice,
+                    size: selectedSize,
+                    image: product.images[0]
+                });
+            }
+
+            // Navigate to checkout
+            setTimeout(() => {
+                router.push('/checkout');
+            }, 100);
+        } catch (error) {
+            console.error('Error in Buy Now:', error);
+            setNotificationMessage("An error occurred. Please try again.");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
+        }
+    };
+
     return (
         <div className={styles.container}>
-            <div className={styles.breadcrumb}>
-                <Link href="/">Home</Link> / <Link href="/category/lehenga">{product.category}</Link> / <span>{product.title}</span>
-            </div>
+            {/* Notification */}
+            {showNotification && (
+                <div className={styles.notification}>
+                    {notificationMessage}
+                </div>
+            )}
 
             <div className={styles.productLayout}>
                 {/* Image Gallery */}
@@ -131,8 +206,8 @@ export default function ProductPage() {
 
                     {/* Add to Cart Actions */}
                     <div className={styles.actions}>
-                        <button className={styles.addToCart}>ADD TO CART</button>
-                        <button className={styles.buyNow}>BUY NOW</button>
+                        <button className={styles.addToCart} onClick={handleAddToCart}>ADD TO CART</button>
+                        <button className={styles.buyNow} onClick={handleBuyNow}>BUY NOW</button>
                     </div>
 
                     {/* Pincode */}
