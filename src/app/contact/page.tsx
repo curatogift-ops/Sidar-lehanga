@@ -8,7 +8,7 @@ export default function Contact() {
 
             <div className={styles.content}>
                 <div className={styles.infoItem}>
-                    <strong>Trade Name:</strong> Sider Lehenga
+                    <strong>Store Name:</strong> Sider Lehenga
                 </div>
                 <div className={styles.infoItem}>
                     <strong>Email:</strong> support@siderlehenga.com
