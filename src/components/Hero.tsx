@@ -12,9 +12,9 @@ const heroImages = [
 ];
 
 const heroOptions = [
-    { id: 1, title: 'SHOP AS A GROOM', link: '/groom' },
-    { id: 2, title: 'SHOP AS A WEDDING ATTENDEE', link: '/guest' },
-    { id: 3, title: 'SHOP AS A FESTIVE BUYER', link: '/festivals' }
+    { id: 1, title: 'SHOP AS A GROOM', link: '/shop' },
+    { id: 2, title: 'SHOP AS A WEDDING ATTENDEE', link: '/shop' },
+    { id: 3, title: 'SHOP AS A FESTIVE BUYER', link: '/shop' }
 ];
 
 const Hero = () => {
