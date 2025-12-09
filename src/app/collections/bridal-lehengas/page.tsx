@@ -12,7 +12,11 @@ export default function BridalLehengas() {
         fetch('/api/products')
             .then(res => res.json())
             .then(data => {
-                setProducts(data);
+                const filtered = data.filter((p: any) =>
+                    (p.tags && p.tags.includes('#BridalLehenga')) ||
+                    (p.title && p.title.toLowerCase().includes('bridal'))
+                );
+                setProducts(filtered);
                 setLoading(false);
             })
             .catch(err => {

@@ -12,7 +12,11 @@ export default function HeavyEmbroideryLehengas() {
         fetch('/api/products')
             .then(res => res.json())
             .then(data => {
-                setProducts(data);
+                const filtered = data.filter((p: any) =>
+                    (p.title && (p.title.toLowerCase().includes('heavy') || p.title.toLowerCase().includes('embroider'))) ||
+                    (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('heavy') || t.toLowerCase().includes('embroider')))
+                );
+                setProducts(filtered);
                 setLoading(false);
             })
             .catch(err => {

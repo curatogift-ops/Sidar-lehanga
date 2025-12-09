@@ -73,12 +73,12 @@ export default function Navbar() {
             </nav>
             <div className={styles.menuCategories}>
               <h4>Collections</h4>
-              <Link href="/shop" onClick={closeMenu}>Wedding Lehengas</Link>
-              <Link href="/shop" onClick={closeMenu}>Designer Lehengas</Link>
-              <Link href="/shop" onClick={closeMenu}>Bridal Lehengas</Link>
-              <Link href="/shop" onClick={closeMenu}>Party Wear Lehengas</Link>
-              <Link href="/shop" onClick={closeMenu}>Heavy Embroidery Lehengas</Link>
-              <Link href="/shop" onClick={closeMenu}>Haldi & Mehndi Lehenga</Link>
+              <Link href="/collections/wedding-lehengas" onClick={closeMenu}>Wedding Lehengas</Link>
+              <Link href="/collections/designer-lehengas" onClick={closeMenu}>Designer Lehengas</Link>
+              <Link href="/collections/bridal-lehengas" onClick={closeMenu}>Bridal Lehengas</Link>
+              <Link href="/collections/party-wear-lehengas" onClick={closeMenu}>Party Wear Lehengas</Link>
+              <Link href="/collections/heavy-embroidery-lehengas" onClick={closeMenu}>Heavy Embroidery Lehengas</Link>
+              <Link href="/collections/haldi-mehndi-lehenga" onClick={closeMenu}>Haldi & Mehndi Lehenga</Link>
             </div>
           </div>
         </>

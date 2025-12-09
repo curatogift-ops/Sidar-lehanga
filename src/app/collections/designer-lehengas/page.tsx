@@ -12,7 +12,11 @@ export default function DesignerLehengas() {
         fetch('/api/products')
             .then(res => res.json())
             .then(data => {
-                setProducts(data);
+                const filtered = data.filter((p: any) =>
+                    (p.tags && p.tags.includes('#DesignerLehenga')) ||
+                    (p.title && p.title.toLowerCase().includes('designer'))
+                );
+                setProducts(filtered);
                 setLoading(false);
             })
             .catch(err => {

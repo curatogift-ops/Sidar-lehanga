@@ -12,7 +12,11 @@ export default function PartyWearLehengas() {
         fetch('/api/products')
             .then(res => res.json())
             .then(data => {
-                setProducts(data);
+                const filtered = data.filter((p: any) =>
+                    (p.tags && (p.tags.includes('#ReceptionWear') || p.tags.includes('#FestiveFashion'))) ||
+                    (p.title && p.title.toLowerCase().includes('party'))
+                );
+                setProducts(filtered);
                 setLoading(false);
             })
             .catch(err => {

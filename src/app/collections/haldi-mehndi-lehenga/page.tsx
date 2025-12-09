@@ -12,7 +12,11 @@ export default function HaldiMehndiLehenga() {
         fetch('/api/products')
             .then(res => res.json())
             .then(data => {
-                setProducts(data);
+                const filtered = data.filter((p: any) =>
+                    (p.tags && (p.tags.includes('#HaldiOutfit') || p.tags.includes('#MehendiLook'))) ||
+                    (p.title && (p.title.toLowerCase().includes('haldi') || p.title.toLowerCase().includes('mehndi')))
+                );
+                setProducts(filtered);
                 setLoading(false);
             })
             .catch(err => {
