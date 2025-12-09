@@ -75,9 +75,14 @@ export default function Footer() {
                             &copy; 2025 Sider Lehenga created by Digitech Avenue
                         </div>
                         <div className={styles.paymentIcons} suppressHydrationWarning>
-                            <div className={styles.paymentIcon} style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#002663', background: 'white', padding: '5px 10px' }} suppressHydrationWarning>
-                                Razorpay
-                            </div>
+                            <NextImage
+                                src="/Razorpay_logo.svg"
+                                alt="Razorpay - Secure Payments"
+                                width={100}
+                                height={30}
+                                className={styles.paymentIcon}
+                                style={{ objectFit: 'contain' }}
+                            />
                         </div>
                     </div>
                 </div>

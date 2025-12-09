@@ -12,9 +12,9 @@ const heroImages = [
 ];
 
 const heroOptions = [
-    { id: 1, title: 'SHOP AS A GROOM', link: '/shop' },
-    { id: 2, title: 'SHOP AS A WEDDING ATTENDEE', link: '/shop' },
-    { id: 3, title: 'SHOP AS A FESTIVE BUYER', link: '/shop' }
+    { id: 1, title: 'SHOP AS A GROOM', link: '/collections/wedding-lehengas' },
+    { id: 2, title: 'SHOP AS A WEDDING ATTENDEE', link: '/collections/party-wear-lehengas' },
+    { id: 3, title: 'SHOP AS A FESTIVE BUYER', link: '/collections/haldi-mehndi-lehenga' }
 ];
 
 const Hero = () => {

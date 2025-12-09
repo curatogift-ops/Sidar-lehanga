@@ -206,11 +206,12 @@
 
 .paymentIcon {
     background: white;
-    padding: 2px 5px;
-    border-radius: 2px;
-    color: #333;
-    font-weight: bold;
-    font-size: 0.7rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
 }
 
 @media (max-width: 1024px) {
