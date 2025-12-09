@@ -4,57 +4,43 @@
     height: 85vh;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
-.bgImage {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.activeImage {
-    opacity: 1;
-    z-index: 1;
-}
-
-.image {
-    object-fit: cover;
-    object-position: center 20%;
-    /* Adjusted to focus on face/upper body */
-}
-
-.overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+.imageContainer {
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    order: 2;
 }
 
 .content {
     position: relative;
     z-index: 10;
-    width: 100%;
-    max-width: var(--container-width, 1200px);
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 50%;
+    background-color: #f5f1ed;
+    padding: 60px 40px;
     display: flex;
     flex-direction: column;
-    height: 100%;
     justify-content: center;
+    gap: 2rem;
+    order: 1;
+}
+
+.image {
+    object-fit: cover;
+    object-position: center;
 }
 
 .headingWrapper {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .heading {
     font-family: var(--font-heading, serif);
     font-size: 3.5rem;
-    color: white;
+    color: #333;
     line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .navWrapper {
@@ -64,40 +50,32 @@
 }
 
 .navItem {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8rem;
+    color: rgba(51, 51, 51, 0.6);
+    font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
     text-decoration: none;
     transition: all 0.3s ease;
     padding: 15px 30px;
-    /* Match active padding to prevent jump */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Match active alignment */
     letter-spacing: 1px;
     width: 100%;
     max-width: 400px;
-    /* Match active width constraint */
     cursor: pointer;
     border-radius: 4px;
-    /* Optional: smooth corners */
 }
 
 .navItem:hover {
-    color: white;
+    color: #333;
 }
 
 .active {
     background-color: #E04E1C;
-    /* Orange */
     color: white;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     opacity: 1;
-    cursor: default;
-    /* Not clickable */
-    /* Layout properties inherited/matched with navItem to prevent flickering */
 }
 
 .arrowIcon {
@@ -107,77 +85,64 @@
 
 /* Responsive */
 @media (min-width: 768px) {
-    .content {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .headingWrapper {
-        width: 50%;
-        margin-bottom: 0;
-    }
-
     .heading {
-        font-size: 5rem;
-    }
-
-    .navWrapper {
-        width: 40%;
-        align-items: flex-end;
+        font-size: 4rem;
     }
 
     .navItem {
-        font-size: 1.1rem;
-        padding: 15px 30px;
-        /* Ensure consistent padding on desktop too */
-    }
-
-    .active {
-        width: 350px;
-        max-width: none;
-    }
-
-    /* Ensure inactive items also have the same width on desktop for alignment */
-    .navItem:not(.active) {
-        width: 350px;
-        max-width: none;
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 767px) {
     .hero {
-        height: 100vh;
+        height: calc(100vh - 120px);
+        flex-direction: column;
+        margin-top: 0;
+    }
+
+    .imageContainer {
+        width: 100%;
+        height: 50%;
+        order: 1;
     }
 
     .content {
-        justify-content: center;
-        padding-top: 60px;
+        width: 100%;
+        height: 50%;
+        padding: 20px 20px;
+        order: 2;
+        gap: 1rem;
+    }
+
+    .image {
+        object-fit: contain;
+        object-position: center;
+    }
+
+    .headingWrapper {
+        margin-bottom: 0.5rem;
     }
 
     .heading {
-        font-size: 3rem;
-        text-align: left;
-        margin-bottom: 3rem;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
     }
 
     .navWrapper {
         width: 100%;
-        align-items: flex-start;
+        gap: 0.3rem;
     }
 
     .navItem {
         width: 100%;
         max-width: 100%;
-        /* Ensure full width on mobile */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        margin-bottom: 0.5rem;
-        /* Add spacing */
+        font-size: 0.8rem;
+        padding: 10px 18px;
     }
 
     .active {
         width: 100%;
         max-width: 100%;
-        border-bottom: none;
     }
 }

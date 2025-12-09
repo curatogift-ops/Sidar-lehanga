@@ -5,12 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Hero.module.css';
 
-const heroImages = [
-    '/hero1.webp',
-    '/hero2.webp',
-    '/hero3.webp'
-];
-
 const heroOptions = [
     { id: 1, title: 'SHOP AS A GROOM', link: '/collections/wedding-lehengas' },
     { id: 2, title: 'SHOP AS A WEDDING ATTENDEE', link: '/collections/party-wear-lehengas' },
@@ -18,54 +12,41 @@ const heroOptions = [
 ];
 
 const Hero = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [activeOptionIndex, setActiveOptionIndex] = useState(1); // Start with the middle one active
 
     useEffect(() => {
-        const imageInterval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-        }, 5000);
-
         const optionInterval = setInterval(() => {
             setActiveOptionIndex((prevIndex) => (prevIndex + 1) % heroOptions.length);
         }, 3000); // Rotate active option every 3 seconds
 
         return () => {
-            clearInterval(imageInterval);
             clearInterval(optionInterval);
         };
     }, []);
 
     return (
         <section className={styles.hero}>
-            {/* Background Images Slider */}
-            {heroImages.map((src, index) => (
-                <div
-                    key={src}
-                    className={`${styles.bgImage} ${index === currentImageIndex ? styles.activeImage : ''}`}
-                >
-                    <Image
-                        src={src}
-                        alt={`Hero Image ${index + 1}`}
-                        fill
-                        priority={index === 0}
-                        className={styles.image}
-                    />
-                    <div className={styles.overlay}></div>
-                </div>
-            ))}
+            {/* Image Container - Right Side on Desktop, Top on Mobile */}
+            <div className={styles.imageContainer}>
+                <Image
+                    src="/hero section image .png"
+                    alt="Hero Section"
+                    fill
+                    priority
+                    className={styles.image}
+                />
+            </div>
 
-            {/* Content Container */}
+            {/* Content Container - Left Side on Desktop, Bottom on Mobile */}
             <div className={styles.content}>
-
-                {/* Left Side - Main Heading */}
+                {/* Main Heading */}
                 <div className={styles.headingWrapper}>
                     <h1 className={styles.heading}>
                         What's special <br /> today?
                     </h1>
                 </div>
 
-                {/* Right Side - Navigation Menu */}
+                {/* Navigation Menu */}
                 <div className={styles.navWrapper}>
                     {heroOptions.map((option, index) => {
                         const isActive = index === activeOptionIndex;
@@ -92,10 +73,6 @@ const Hero = () => {
                     })}
                 </div>
             </div>
-
-            {/* Chat Icon - Bottom Right */}
-
-
         </section>
     );
 };

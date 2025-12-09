@@ -6,12 +6,12 @@ import Link from 'next/link';
 import styles from './VibeSection.module.css';
 
 const vibes = [
-    { id: 1, title: 'Wedding Lehengas', image: '/hero1.webp', link: '/shop' },
-    { id: 2, title: 'Designer Lehengas', image: '/hero2.webp', link: '/shop' },
-    { id: 3, title: 'Bridal Lehengas', image: '/hero3.webp', link: '/shop' },
-    { id: 4, title: 'Party Wear Lehengas', image: '/hero1.webp', link: '/shop' },
-    { id: 5, title: 'Heavy Embroidery Lehengas', image: '/hero2.webp', link: '/shop' },
-    { id: 6, title: 'Haldi & Mehndi Lehenga', image: '/hero3.webp', link: '/shop' },
+    { id: 1, title: 'Wedding Lehengas', image: '/photo_6125111998686543495_y.jpg', link: '/shop' },
+    { id: 2, title: 'Designer Lehengas', image: '/photo_6172278620861611696_y_1.jpg', link: '/shop' },
+    { id: 3, title: 'Bridal Lehengas', image: '/photo_6258158433270352136_y_1.webp', link: '/shop' },
+    { id: 4, title: 'Party Wear Lehengas', image: '/photo_6269479443076595000_y.jpg', link: '/shop' },
+    { id: 5, title: 'Heavy Embroidery Lehengas', image: '/photo_6289324309402991350_y.jpg', link: '/shop' },
+    { id: 6, title: 'Haldi & Mehndi Lehenga', image: '/photo_6323385680687906435_y.jpg', link: '/shop' },
 ];
 
 const VibeSection = () => {
