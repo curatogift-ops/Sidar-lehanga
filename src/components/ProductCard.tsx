@@ -4,21 +4,36 @@ import styles from './ProductCard.module.css';
 
 interface ProductProps {
     id: number;
-    name: string;
-    price: string;
-    originalPrice?: string;
+    name?: string;
+    title?: string;
+    price: string | number;
+    originalPrice?: string | number;
     discount?: number;
     category: string;
-    image: string;
+    image?: string;
+    images?: string[];
 }
 
 export default function ProductCard({ product }: { product: ProductProps }) {
+    const name = product.name || product.title || 'Untitled Product';
+    const image = product.image || (product.images && product.images.length > 0 ? product.images[0] : '') || '/placeholder.jpg';
+
+    const formatPrice = (price: string | number) => {
+        if (typeof price === 'number') {
+            return `₹${price.toLocaleString('en-IN')}`;
+        }
+        return price;
+    };
+
+    const displayPrice = formatPrice(product.price);
+    const displayOriginalPrice = product.originalPrice ? formatPrice(product.originalPrice) : undefined;
+
     return (
         <Link href={`/product/${product.id}`} className={styles.card}>
             <div className={styles.imageContainer}>
                 <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={image}
+                    alt={name}
                     fill
                     className={styles.image}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -28,11 +43,11 @@ export default function ProductCard({ product }: { product: ProductProps }) {
                 )}
             </div>
             <div className={styles.details}>
-                <h3 className={styles.name}>{product.name}</h3>
+                <h3 className={styles.name}>{name}</h3>
                 <div className={styles.priceContainer} suppressHydrationWarning>
-                    <span className={styles.price} suppressHydrationWarning>{product.price}</span>
-                    {product.originalPrice && (
-                        <span className={styles.originalPrice} suppressHydrationWarning>{product.originalPrice}</span>
+                    <span className={styles.price} suppressHydrationWarning>{displayPrice}</span>
+                    {displayOriginalPrice && (
+                        <span className={styles.originalPrice} suppressHydrationWarning>{displayOriginalPrice}</span>
                     )}
                 </div>
             </div>
